@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<?php   
+  error_reporting(E_ALL);
+  ini_set('display_errors', 1);
+  require "base.php";
+?>
+  <link rel='icon' href='favicon.png'>
+  <link rel='stylesheet' href='style.css' type='text/css' />
+</head>
+<body>
+<?php render_mmbr_header();
+  echo '<div id="main">';
+  if( !empty($_SESSION['LoggedIn']) && !empty($_SESSION['Username'])){
+    if( $_GET['item'] == 'book'){
+      echo '<h4>Add Book</h4>';
+      var_dump($_POST);
+      if( $_POST['submit'] == 'add_book'){
+        if( $_POST['adult']? $adult = 0 : $adult = 1);
+        $sql = "INSERT INTO books(title, auth, isbn, adult) 
+          VALUES('".$_POST['title']."', '".$_POST['auth']."', '"
+                   .$_POST['isbn']."', ".$adult.")";
+        var_dump($sql);
+        $stmt = oci_parse($conn, $sql);
+        $success = oci_execute($stmt);
+        if( $success){
+          echo '<h3>Your book was added to the database</h3>';
+        }else{
+          echo '<h3>That book was not beefy enough for this database.
+                <br>Try again.</h3>';
+        }
+
+      }elseif( $_POST['submit'] == 'add_cd'){
+        if( $_POST['adult']? $adult = 0 : $adult = 1);
+        $sql = "INSERT INTO cds(title, artist, genre, adult) 
+          VALUES('".$_POST['title']."', '".$_POST['artist']."', '"
+                   .$_POST['genre']."', ".$_POST['adult'].")";
+        var_dump($sql);
+        $stmt = oci_parse($conn, $sql);
+        $success = oci_execute($stmt);
+        if( $success){
+          echo '<h3>Your CD was added to the database</h3>';
+        }else{
+          echo 'What is this weak shit!?<br>Try again!</h3>';
+        }
+
+      }elseif( $_POST['submit'] == 'add_movie'){
+        if( $_POST['adult']? $adult = 0 : $adult = 1);
+        $sql = "INSERT INTO movies(title, rating, format, sumry, adult)
+          VALUES('".$_POST['title']."', '".$_POST['rating']."', '".$_POST['format']."', '"
+                   .$_POST['sumry']."', ".$_POST['adult'].")";
+        var_dump($sql);
+        $stmt = oci_parse($conn, $sql);
+        $success = oci_execute($stmt);
+        if( $success){
+          echo '<h3>Your movie was added to the database</h3>';
+        }else{
+          echo '<h3>What is this weak shit!?<br>Try again!</h3>';
+        }    
+      
+      }
+?>
+
+      <table id='form_table'>   
+        <form action='add.php?item=book' method='POST' id='add_form'>
+        <tr>
+          <td>Title:</td> <td><input type='text' name='title'></td>
+        </tr><tr>
+          <td>Author:</td><td><input type='text' name='auth'></td>
+        </tr><tr>
+          <td>ISBN:</td><td><input type='text' name='isbn'></td>
+        </tr><tr>
+          <td>Kid Safe?</td><td><input type='checkbox' name='adult'></td>
+        </tr><tr>
+          <td></td><td><input type='submit' name='submit' value='add_book'></td>
+        </form>
+      </table>
+
+
+
+
+
+
+      <?php
+    }elseif( $_GET['item'] == 'cd'){
+      echo 'Add CD';
+    }elseif( $_GET['item'] == 'movie'){
+      echo 'Add Movie';
+    }else
+      echo 'GTFO!!';
+  
+
+
+
+
+
+
+
+
+
+
+
+  }else{
+    echo 'GTFO!!';
+  }
+?>
+</body>
+</html>

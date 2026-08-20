@@ -1,0 +1,31 @@
+insert a b 1
+insert a c 1
+insert b d 2
+insert b e 2
+insert c f 2
+insert c g 2
+insert d h 3
+insert d i 3
+insert e j 3
+insert e k 3
+insert f l 3
+insert f m 3
+insert g n 3
+insert g o 3
+lookup a
+lookup b
+lookup c
+lookup d
+lookup e 
+lookup f
+lookup g
+lookup h
+lookup i
+lookup j
+lookup k
+lookup l
+lookup m
+lookup n
+lookup o
+distance a o
+
