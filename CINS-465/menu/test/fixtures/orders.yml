@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  charge: 9.99
+  promise_time: 1
+  public: false
+  req: MyString
+
+two:
+  charge: 9.99
+  promise_time: 1
+  public: false
+  req: MyString

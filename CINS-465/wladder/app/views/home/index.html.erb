@@ -1,0 +1,40 @@
+<h3>Matthew Bourn presents ... </h3>
+<h4>A Tyson Henry and 465 production of ... </h4>
+<h4>An insanely hard game to frustrate and annoy you ...</h4>
+<span style='color:red;'>
+<font size='10'><strong> WORD LADDER!! </strong></font>
+</span>
+<br>
+<br>
+<span style=' background-color: grey;'>
+Your starting word is:  
+<b><%= @word_start %></b>
+</span>
+<%= form_tag(solve_path, method: "get") do  %>
+
+    <%= hidden_field_tag 'word_first', @word_start %>
+    <%= hidden_field_tag 'word_last', @word_end %>
+
+    <%= label_tag(:word_one, "Word 1: ") %>
+    <%= text_field_tag(:word_one) %>
+    <br>
+    <%= label_tag(:word_two, "Word 2: ") %>
+    <%= text_field_tag(:word_two) %>
+    <br>
+    <%= label_tag(:word_three, "Word 3: ") %>
+    <%= text_field_tag(:word_three) %>
+    <br>
+    <%= label_tag(:word_four, "Word 4: ") %>
+    <%= text_field_tag(:word_four) %>
+    <br>
+    <%= label_tag(:word_five, "Word 5: ") %>
+    <%= text_field_tag(:word_five) %>
+    <br>
+
+<span style=' background-color: grey'>
+Your finishing word is: 
+<b><%= @word_end %></b>
+    <br>
+    <%= submit_tag("Test Your Solution") %>
+<% end %>
+<br>

@@ -1,0 +1,48 @@
+<%= form_for(@professor) do |f| %>
+  <% if @professor.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@professor.errors.count, "error") %> prohibited this professor from being saved:</h2>
+
+      <ul>
+      <% @professor.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :first %><br>
+    <%= f.text_field :first %>
+  </div>
+  <div class="field">
+    <%= f.label :last %><br>
+    <%= f.text_field :last %>
+  </div>
+  <div class="field">
+    <%= f.label :university %><br>
+    <%= f.text_field :university %>
+  </div>
+  <%= f.fields_for :ratings do |ratings_form| %>
+    <h3>New Rating</h3>
+    <div style="margin-left:30px;">
+      <div class="field">
+        <%= ratings_form.label :course %><br>
+        <%= ratings_form.text_field :course %>
+      </div>
+      <div class="field">
+        <%= ratings_form.label :comment %><br>
+        <%= ratings_form.text_field :comment %>
+      </div>
+      <div class="field">
+        <%= ratings_form.label :rating %><br>
+        <%= ratings_form.number_field :rating %>
+      </div>
+    </div>
+  <% end %>
+  <br>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,65 @@
+<% if( !current_user && !@image.public )%>
+  <div id="unauthroized_view">
+    You are not authorized to view this image.<br>
+    Click here to return<br>
+    <%= link_to 'Home', root_path %>
+  </div>
+<% else %>
+  <hr>
+  <table> <tr> <td>
+    <% if( @image.public ) %>
+      <p>This image is set to public</p>
+    <% else %>
+      <p>This image is set to private</p>
+    <% end %>
+
+    <p>
+      <strong>Image Owner:</strong>
+      <%= @image.user.email %>
+    </p>
+
+    <%= image_tag root_url + "/images/" + @image.filename,  alt: @image.filename %><br>
+    <% if current_user && @image.user_id == current_user.id %>
+      <%= link_to 'Edit', edit_image_path(@image) %> |
+    <% end %>
+  </td></tr>
+<% end %>
+<%= link_to 'Back', images_path %>
+
+<% if( current_user && @image.user_id == current_user.id ) %>
+  <h3>Users who have access to the image</h3>
+  <tr><td>
+    <% @users = Imageuser.where(['image_id = ?', @image.id]).pluck("user_id") %>
+    <% @users.each do |u| %>
+      <%= User.where(['id = ?', u]).pluck("name") %>
+    <% end %>
+    <h3>Add Access to Image to Other Users</h3>
+    <div class="field">
+      <%= form_for(@image) do |f| %>
+        <% options_array = User.where(['id != ?',current_user.id]).pluck(:id, :name, :email).map %>
+        <% options_array = options_array.each{ |y| y = [ y[1]+" "+y[2], y[0] ]} %>
+        <%= f.hidden_field :image_id, :value => @image.id %>
+        <%= f.select( :user_id, options_for_select(options_array), {},:multiple => true ) %><br>
+        <%= f.submit %>
+      <% end %>
+    </div>
+  </td>
+<% end %>
+
+
+  <h3>Tags</h3>
+  <% @image.tags.each do |tag| %>
+    <% if !tag.new_record? %>
+        <td>
+          <%= tag.msg %><br>
+          <%= link_to "Edit", edit_tag_path(tag) %> | <%= link_to 'Destroy', tag, method: :delete, data: {confirm: 'Are you sure?' } %>
+      </td>
+    </tr>
+  <% end %>
+<% end %>
+
+<h3>Create New Tag</h3>
+<%= render 'tags/form' %>
+</table>
+
+

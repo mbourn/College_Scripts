@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  price: 9.99
+  name: MyString
+  pic: MyString
+  allergy: MyString
+  recipe: MyString
+  desc: MyString
+  glut: false
+  veg: false
+  vegan: false
+  menu: 1
+  kid: false
+
+two:
+  price: 9.99
+  name: MyString
+  pic: MyString
+  allergy: MyString
+  recipe: MyString
+  desc: MyString
+  glut: false
+  veg: false
+  vegan: false
+  menu: 1
+  kid: false

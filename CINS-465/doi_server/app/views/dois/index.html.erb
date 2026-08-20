@@ -1,0 +1,28 @@
+<h1>Listing dois</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Doi</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @dois.each do |doi| %>
+      <tr>
+        <td><%= doi.doi %></td>
+        <td><%= doi.name %></td>
+        <td><%= doi.description %></td>
+        <td><%= link_to 'See URL History', doi %></td>
+        <td><%= link_to 'Destroy', doi, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New DOI', new_doi_path %> | <%= link_to 'New Search', root_path %>

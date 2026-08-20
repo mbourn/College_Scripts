@@ -1,0 +1,83 @@
+<div id="public_pics">
+<h1>Public Pictures</h1>
+<table>
+  <tbody>
+    <tr>
+    <!-- Display public images -->
+    <% @count = 0 %>
+    <% @pub_images = Image.where(:public => TRUE) %>
+    <% @pub_images.each do |image| %>
+      <td><%= link_to image do %>
+        <%= image_tag root_url + "/images/" + image.filename, size: "110x110", alt: image.filename %><br>
+      <% end %>
+        <% if( current_user ) %>
+          <% if( image.user.id == current_user.id) %>
+            <%= link_to 'Edit', edit_image_path(image) %>
+            <%= link_to 'Destroy', image, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+        <% end %>
+
+        <% @count += 1 %>
+        <% if( @count % 6 == 0 ) %>
+          </tr><tr>
+        <% end %>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<!-- Display shared pics -->
+<% if( current_user ) %>
+<div id="shared_pics">
+  <h1> Pictures That Have Been Shared With You </h1>
+  <table>
+    <tr>
+      <% @count = 0 %>
+      <% @shared = Imageuser.where(['user_id = ?', current_user.id]).pluck("image_id") %>
+      <% @shared.each do |shared| %>
+        <td>
+          <% s_image = Image.where(['id = ?', shared]) %>
+          <%= link_to s_image[0] do %>
+            <% s_image = s_image.pluck("filename") %>
+            <%= image_tag root_url + "/images/" + s_image[0], size: "110x110", alt: s_image[0] %>
+          <% end %> 
+        </td>
+        <% @count += 1 %>
+        <% if( @count % 6 == 0 ) %>
+          </tr><tr>
+        <% end %>
+      <% end %>
+    </tr>
+  </table>
+</div>
+
+<!-- Display private pics -->
+<div id="private_pics">
+<h1>Private Pictures That You Own</h1>
+<table>
+  <tbody>
+  <tr>
+  <% @count = 0 %>
+  <% @priv_images = Image.where(['public = ? AND user_id = ?', FALSE, current_user.id]) %>
+  <% @priv_images.each do |image| %>
+    <td><%= link_to image do %>
+      <%= image_tag root_url + "/images/" + image.filename, size: "110x110", alt: image.filename %><br>
+    <% end %>
+    <%= link_to 'Edit', edit_image_path(image) %>
+    <%= link_to 'Destroy', image, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% @count += 1 %>
+    <% if( @count % 6 == 0 ) %>
+      </tr><tr>
+    <% end %>
+  <% end %>
+  </tr>
+  </tbody>
+</table>
+</div>
+<% end %>
+
+<br>
+<% if( current_user ) %>
+  <%= link_to 'New Image', new_image_path %>
+<% end %>

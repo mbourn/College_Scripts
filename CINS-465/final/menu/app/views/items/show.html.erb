@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<div id="main">
+  <section id="pic">
+    <%= image_tag @item.pic, size: "210x150", alt: @item.name %>
+    <br><b><%= @item.name %> | <%= @item.price %></b><br><br>
+  </section>
+
+  <section id="attribs">
+    <% if( @item.allergy != 'none' ) %>
+      -This plate conatins these possible <b>allergens</b>:<br><b><%= @item.allergy %></b><br>
+    <% else %>
+      -This plate does <b>not</b> contain any <b>common allergens</b><br>
+    <% end %>
+
+    <% if( @item.glut == true ) %>
+      -This plate is <b>Gluten Free</b><br>
+    <% end %>
+    <% if( @item.veg == true ) %>
+      -This plate is <b>Vegetarian</b><br>
+    <% end %>
+    <% if( @item.vegan == true ) %>
+      -This plate is <b>Vegan</b><br>
+    <% end %>
+  </section>
+
+  <section id="desc">
+    <br>Plate Descrtion:<br>
+    <aside>
+      <%= @item.desc %>
+    </aside>
+  </section>
+
+
+  <% if( current_user.email == "admin@example.com" ) %>
+    <%= link_to 'Edit', edit_item_path(@item) %> |
+  <% end %>
+  <b><%= link_to 'Back To The Menu', items_path %></b>
+</div>

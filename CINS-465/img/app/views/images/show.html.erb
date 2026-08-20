@@ -1,0 +1,122 @@
+
+<% if( !current_user && !@image.public )%>
+  <div id="unauthroized_view">
+    You are not authorized to view this image.<br>
+    Click here to return<br>
+    <%= link_to 'Home', root_path %>
+  </div>
+<% else %> 
+  <hr>
+  <table> 
+    <tr> 
+      <td>
+
+        <!-- Display the image and info about the image -->
+        <% if( @image.public ) %>
+          <p>This <b>public</b>  
+        <% else %>
+          <p>This <b>private</b> 
+        <% end %>
+
+        image belongs to <b><%= @image.user.name %></b>
+        </p>
+        <!-- Get a list of user_ids with whom this image has been shared -->
+        <% shared_list = Imageuser.where(['image_id = ?', @image.id]).pluck("user_id")  %>
+        <% shared = false %>
+
+        <!-- Determine if the current user is on that list -->
+        <% shared_list.each do |id| %>
+          <% if( current_user.id == id ) %>
+            <% shared = true %>
+          <% end %>
+        <% end %>
+
+        <% if( @image.public || @image.user_id == current_user.id || shared ) %>  
+          <%= image_tag root_url + "/images/" + @image.filename,  alt: @image.filename %><br>
+        <% end %>
+        <% if current_user && @image.user_id == current_user.id %>
+          <%= link_to 'Edit', edit_image_path(@image) %> | 
+          <%= link_to 'Destroy', @image, method: :delete, data: { confirm: 'Are you sure?' } %> |
+        <% end %>
+        <%= link_to 'Back', images_path %>
+      </td>
+      
+      <!-- Imageuser Access display and modify section -->          
+      <td>
+        <% if( current_user && @image.user_id == current_user.id ) %>
+          <h3>Users who have access to the image</h3>
+          <% @users = Imageuser.where(['image_id = ?', @image.id]).pluck("user_id") %>
+          <% @users.each do |u| %>
+            <%= User.where(['id = ?', u]).pluck("name")[0] %><br>
+          <% end %>
+
+          <h3>Grant Access to Image to Other Users</h3>
+          <div class="field">
+            <%= form_for(@image) do |f| %>
+              <% u_ids = User.all.pluck("id") - Imageuser.where(['image_id = ?', @image.id]).pluck("user_id") %>
+              <% u_ids.delete(current_user.id) %>
+              <% opts_array = u_ids.map do |u| %>
+                <% user = User.find(u) %>
+                <% [user[:name] +" "+ user[:email], user[:id]]  %>
+              <% end %>
+              <%= f.hidden_field :add_user, :value => "add_user" %>
+              <%= f.hidden_field :image_id, :value => @image.id %> 
+              <%= f.select( :user_id, options_for_select(opts_array), {} ) %><br>
+              <p> <%= f.submit %> </p>
+            <% end %> 
+          </div>
+        <% end %>
+      </td>
+
+      <!-- Remove access from users -->
+      <td>
+        <% if( current_user && current_user.id == @image.user_id ) %>
+          <h3>Remove Access to Image from Other Users</h3>
+          <div class="field">
+            <%= form_for(@image) do |f| %>
+              <% @user_list = Array.new %>
+              <% @users.each do |u| %>
+                <% @user_list.concat( User.where(['id = ?', u ]).pluck("name", "email", "id")) %>
+              <% end %>
+              <% opts_array = @user_list.map do |u| %>
+                <% if( current_user.id != u[2] ) %>
+                  <% [u[0] +" "+ u[1], u[2]] %>
+                <% end %>
+              <% end %>
+              <%= f.hidden_field :remove_user, :value => "remove_user" %>
+              <%= f.hidden_field :image_id, :value => @image.id %>
+              <%= f.select( :user_id, options_for_select(opts_array), {} ) %><br>
+              <p><%= f.submit %></p>
+            <% end %>
+          </div>
+        <% end %>
+      </td>
+    </tr>
+ 
+    <tr>
+      <td>
+
+        <!-- Display tags -->
+        <h3>Tags</h3>
+        <% counter = 0 %>
+        <% @image.tags.each do |tag| %>
+          <% if( !tag.new_record? ) %>
+            <% if( counter >= 0 ) %>
+              <% if( current_user && current_user.id == @image.user_id ) %>
+                <%= link_to "Edit", edit_tag_path(tag) %> | <%= link_to 'Destroy', tag, method: :delete,  data: {confirm: 'Are you sure?' } %>
+              <% end %>
+              <%= tag.msg %><br>
+            <% end %>
+            <% counter += 1 %>
+          <% end %>
+        <% end %>
+      </td>
+      <td>
+        <% if( current_user && current_user.id == @image.user_id ) %>
+          <h3>Create New Tag</h3>
+          <%= render 'tags/form' %>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+<% end %>

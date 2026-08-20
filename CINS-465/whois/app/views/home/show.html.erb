@@ -1,0 +1,15 @@
+<!-- Comment to suck up first few ignored lines -->
+<!-- Comment to suck up first few ignored lines -->
+<!-- Comment to suck up first few ignored lines -->
+<!-- Comment to suck up first few ignored lines -->
+
+<%= link_to "Search Page", root_path %>
+
+<p><% "$ whois #{@query_text} returned"%></p>
+<rb>
+<% @result.each do |line| %>
+  <%= line %>
+  <br>
+<% end %>
+
+<%= link_to "Search Page", root_path %>

@@ -1,0 +1,45 @@
+<h1>Listing items</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Price</th>
+      <th>Name</th>
+      <th>Pic</th>
+      <th>Allergy</th>
+      <th>Recipe</th>
+      <th>Desc</th>
+      <th>Glut</th>
+      <th>Veg</th>
+      <th>Vegan</th>
+      <th>Menu</th>
+      <th>Kid</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item.price %></td>
+        <td><%= item.name %></td>
+        <td><%= item.pic %></td>
+        <td><%= item.allergy %></td>
+        <td><%= item.recipe %></td>
+        <td><%= item.desc %></td>
+        <td><%= item.glut %></td>
+        <td><%= item.veg %></td>
+        <td><%= item.vegan %></td>
+        <td><%= item.menu %></td>
+        <td><%= item.kid %></td>
+        <td><%= link_to 'Show', item %></td>
+        <td><%= link_to 'Edit', edit_item_path(item) %></td>
+        <td><%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Item', new_item_path %>

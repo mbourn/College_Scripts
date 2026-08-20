@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @item.price %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @item.name %>
+</p>
+
+<p>
+  <strong>Pic:</strong>
+  <%= @item.pic %>
+</p>
+
+<p>
+  <strong>Allergy:</strong>
+  <%= @item.allergy %>
+</p>
+
+<p>
+  <strong>Recipe:</strong>
+  <%= @item.recipe %>
+</p>
+
+<p>
+  <strong>Desc:</strong>
+  <%= @item.desc %>
+</p>
+
+<p>
+  <strong>Glut:</strong>
+  <%= @item.glut %>
+</p>
+
+<p>
+  <strong>Veg:</strong>
+  <%= @item.veg %>
+</p>
+
+<p>
+  <strong>Vegan:</strong>
+  <%= @item.vegan %>
+</p>
+
+<p>
+  <strong>Menu:</strong>
+  <%= @item.menu %>
+</p>
+
+<p>
+  <strong>Kid:</strong>
+  <%= @item.kid %>
+</p>
+
+<%= link_to 'Edit', edit_item_path(@item) %> |
+<%= link_to 'Back', items_path %>

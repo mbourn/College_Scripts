@@ -1,0 +1,69 @@
+<% if current_user %>
+  <%= link_to 'Create a New Order', new_order_path %>
+<% end %>
+<div id="main">
+  <div id="container">
+  <div id="bground" style="background-image: url('images/bground.jpg');></div>
+  <div id="text">
+  <%# Get the current time and determine which meal is currently being served %>
+  <% @time = Time.new.strftime("%H").to_i %>
+  <% if @time >= 6 && @time < 11 %>
+    <% @meal = 1; @menu = 'Breakfast' %>
+  <% elsif @time >= 11 && @time < 15 %>
+    <% @meal = 2; @menu = 'Lunch' %>
+  <% else %>
+    <% @meal = 3; @menu = 'Dinner' %>
+  <% end %>
+    <table id="menu-table">
+      <thead>
+        <th colspan=3>
+          <h1>We Are Currently Serving <%= @menu %></h1>
+        </th>
+      </thead>
+
+      <tbody>
+        <% @items = Item.where(:menu => @meal) %>
+        <% @items.each do |item| %>
+        <tr>
+          <td><%= image_tag  item.pic, size: "210x150", alt: item.pic %><br>
+            <h3> <%= item.name %><br><%= link_to 'See Details', item %></h3></td>
+          <td><%= item.desc %></td>
+          <td><%= item.price %></td>
+          <% if( current_user && current_user.email == "admin@example.com") %>
+            <td><%= link_to 'Edit', edit_item_path(item) %></td>
+            <td><%= link_to 'Destroy', item, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+          <% end %>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <table id="kids-menu">
+      <thead>
+        <th colspan=3><h1>Kid's Menu</h1></th>
+      </thead>
+      <tbody>
+        <% @kids = Item.where(:kid => true ) %>
+        <% @kids.each do |item| %>
+        <tr>
+          <td><%= image_tag item.pic, size: "210x150", alt: item.pic %><br>
+            <h3><%= item.name %><br><%= link_to 'See Details', item %></h3></td>
+          <td><%= item.desc %></td>
+          <td><%= item.price %></td>
+          <% if( current_user && current_user.email == "admin@example.com") %>
+            <td><%= link_to 'Edit', edit_item_path(item) %></td>
+            <td><%= link_to 'Destroy', item, method: :get, data: {confirm: 'Are you sure?'} %></td>
+          <% end %>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <br>
+
+  <% if current_user && current_user.email == "admin@example.com" %>
+    <%= link_to 'New Item', new_item_path %>
+  <% end %>
+</div>
+    <img src="images/menu1.jpg" id="menu" alt="Menu">
+</div>

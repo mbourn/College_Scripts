@@ -1,0 +1,15 @@
+
+class RatingsController < ApplicationController
+  before_action :set_rating, only: [:edit, :update, :destroy]
+
+# GET /professors/:professor_id/ratings
+def index
+  @professor = Professor.find params[:professor_id]
+  @ratings = @professor.ratings
+end
+
+# GET professors/:professor_id/ratings/new
+def new
+  @professor = Professor.find params[:professor_id]
+  @rating = Professor.ratings.new
+end

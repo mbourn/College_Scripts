@@ -1,0 +1,37 @@
+<%= form_for(@doi) do |f| %>
+  <% if @doi.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@doi.errors.count, "error") %> prohibited this doi from being saved:</h2>
+
+      <ul>
+      <% @doi.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <% new_doi = Digest::MD5.hexdigest(Time.now.to_s) %>
+    <%= f.label :doi %><br>
+    <strong><%= new_doi %></strong>
+    <%= f.hidden_field :doi, :value => new_doi %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </div>
+  <%= f.fields_for :urls do |urls_form| %>
+    <div class="field">
+      <%= urls_form.label :url %><br>
+      <%= urls_form.text_field :url %>
+    </div>
+  <% end %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

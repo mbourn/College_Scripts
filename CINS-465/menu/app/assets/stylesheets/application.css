@@ -1,0 +1,79 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+
+input {
+      font-family: Trebuchet MS;
+      border: 1px solid #CCC;
+      margin-bottom: 5px;
+      background-color: #FFF;
+      padding: 2px;
+}
+
+
+#main{
+      
+}
+
+#container {
+    position:  relative;
+    height: 100%;
+    width:  100%;
+
+}
+
+table#menu-table, table#kids-menu{
+    width: 630px;
+    text-shadow: 5px 5px 10px grey;
+    position: relative;
+    left: 365px;
+    top:  50%;
+    opacity: 1.0;
+}
+
+
+#menu {
+    position:   relative;
+    top:        -2290px;
+    z-index:    1;
+    opacity:    0.6;
+    left:       350px;
+    width:      700px;
+
+}
+
+
+#text {
+    position: relative;
+    top:  -950px;
+    z-index:    2;
+}
+
+#bground {
+    background-repeat:      no-repeat;
+    background-attachment:  fixed;
+    background-position:    -3000px 20px;
+    background-size:        1152px 864px;
+    position: relative;
+    width: 1152px;
+    height: 1000px;
+    left: 20%;
+    z-index:  0;
+
+}
+
+
+

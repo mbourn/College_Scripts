@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<table>
+  <tr>
+    <td><strong>Doi:</strong></td>
+    <td><%= @doi.doi %></td>
+  </tr>
+  <tr>
+    <td><strong>Name:</strong></td>
+    <td><%= @doi.name %></td>
+  </tr>
+  <tr>
+    <td><strong>Description: </strong></td>
+    <td><%= @doi.description %></td>
+  </tr>
+</table>
+<table>
+  <thead>
+    <tr>
+      <th>URL History: </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @doi.urls.each do |url| %>
+      <% if !url.new_record? %>
+        <tr>
+          <td><%= url.url %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<br><br>
+<h3>Update the URL</h3>
+<%= render 'urls/form' %>
+<br><br>
+
+
+<%= link_to 'New Search', root_path %> |
+<%= link_to 'Back', dois_path %>

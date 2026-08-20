@@ -1,0 +1,42 @@
+<p id="notice"><%= notice %></p>
+<div id="main">
+  <p>
+    <% @time = @order.promise_time.localtime.strftime("%I:%M%p") %>
+    <h3> Thank you for your order!<br>
+      Your food will be read for pickup at:<br>  
+      <span style="color:green; background-color:#cccccc;"><%= @time %></span>
+    </h3>
+  </p>
+
+  <p>
+    You ordered:<br>
+    <table>
+      <tr>  
+      <% total = 0 %>
+      <% @item_list = OrderItem.where(:order_id => @order.id).pluck("item_id, quant") %>   
+      <% @item_list.each do |i| %>
+        <% item = Item.find(i[0]) %>
+        <% total += item.price * i[1] %>
+        <td><%= item.name %> </td><td><%= item.price %></td><td>x <%= i[1] %></td>
+        <td>= <%= item.price * i[1] %>
+      </tr>
+      <% end %>
+      <tr>
+        <td></td><td>Sub Total:</td><td></td><td><%= sprintf( "%0.02f", total) %></td>
+      </tr><tr>
+        <td></td><td>Sales Tax:</td><td></td><td><%= sprintf( "%0.02f", (total * 0.075)) %></td>
+      </tr><tr>
+        <td></td>
+        <td><h3>Grand Total:</h3></td><td></td>
+        <td><h3>$<%= sprintf( "%0.02f", (total += total * 0.075)) %></h3></td>
+      </tr>
+      <% if( @order.req != "") %>
+        <tr>
+          <td>And you made these special requests:</td>
+          <td colspan=3 border=1>
+            <%= @order.req %>
+        </td></tr>
+      <% end %>
+      </table>
+  <%= link_to 'Back To The Menu', root_path %>
+</div>

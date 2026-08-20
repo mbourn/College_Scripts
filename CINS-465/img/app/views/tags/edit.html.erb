@@ -1,0 +1,6 @@
+<h1>Editing tag</h1>
+
+<%= render 'form' %>
+
+<% img = Tag.where(['id = ?', params[:id]]).pluck("image_id") %>
+<%= link_to 'Back', images_path + "/" + img[0].to_s %>

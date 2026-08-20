@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  charge: 9.99
+  promise_time: 2014-12-09 05:47:31
+  req: MyString
+  uid: 1
+
+two:
+  charge: 9.99
+  promise_time: 2014-12-09 05:47:31
+  req: MyString
+  uid: 1

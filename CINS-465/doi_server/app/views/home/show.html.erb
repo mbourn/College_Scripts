@@ -1,0 +1,22 @@
+<div name="home_show_result">
+  <% if @result %>
+    <table>
+      <tr>
+        <td><strong>Name</strong></td>
+        <td><strong>DOI</strong></td>
+        <td><strong>URL</strong></td>
+      </tr>
+      <tr>
+        <td><%= @result.name %></td>
+        <td><%= @result.doi %></td>
+        <td><%= @result.urls.last.url %></td>
+      </tr>
+    </table>
+    <br>
+    <%= link_to "View This DOI's URL History", @result %>
+  <% elsif @query_text != nil && @query_text != "" %>
+    <b>We did not find any records matching <% @query_text %>, please try again</b>
+  <% end %>
+</div>
+<br><br><br>
+<%= link_to "New Search", root_path %> | <%= link_to 'Create a new DOI', controller: "dois", action: "new" %> | <%= link_to 'View All DOIs', dois_path %> 

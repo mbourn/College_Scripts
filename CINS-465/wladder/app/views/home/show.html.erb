@@ -1,0 +1,19 @@
+<p style='color:balck;'>
+  <h3>WORD LADDER</h3>
+</p>
+<p>
+  <% if @result==true %>
+    <h1 style='color:red;'> WINNER!! </h1>
+    <br> My god!  You won.  Not too shabby!
+  <% else %>
+    <h1 style='color:red;'> LOSER!! </h1>
+    Ha! You suck at life!
+  <% end %>
+<table border='1px'>
+  <% @ladder.each do |word| %>
+    <tr><td> 
+    <%= word %>
+    </td></tr> 
+  <% end %>
+</table>
+<p><%= link_to "Play Again?", root_path %></p>

@@ -1,0 +1,14 @@
+<div id='home_query'>
+  <h1>DOI-to-Url Lookup Utility</h1>
+  <%= form_tag(query_path, method: "get") do %>
+    <%= label_tag(:query, "DOI or Name: ") %>
+    <%= text_field_tag(:query) %>
+    <%= submit_tag("Lookup") %>
+  <% end %>
+</div>
+
+<br><br>
+
+<div id='home_new'>
+  <%= link_to 'Create a new DOI', controller: "dois", action: "new" %> | <%= link_to 'View All DOIs', dois_path %>
+</div>
